@@ -15,3 +15,4 @@ _start :
         movq $60 , % rax # 60 = exit syscall
         xorq % rdi , % rdi # % rdi = 0 ( exit status )
         syscall
+
