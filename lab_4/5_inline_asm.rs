@@ -1,5 +1,5 @@
-#![feature(asm)] // Enable the inline assembly feature (unstable)
-// so... in my opinion c is better for inline assembly
+use std::arch::asm; // Import the inline assembly macro
+
 fn main() {
     let mut a: i64 = 5; // Initialize a
     let b: i64 = 3;     // Initialize b
