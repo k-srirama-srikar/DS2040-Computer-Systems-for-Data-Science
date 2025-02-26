@@ -6,7 +6,7 @@ int do_stuff(int x, int y){
 
 int main(){
     int a;
-    a = do_stuff(5,10);
+    a = do_stuff(5, 10);
     printf("Result is %d\n",a);
     return 0;
 }
