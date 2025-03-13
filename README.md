@@ -27,3 +27,17 @@ _(As per the UG Curriculum)_
 > [!NOTE]
 > The programs given were usually in C, but I've tried some stuff in Rust 🦀...
 
+
+### Repository Guide
+
+| | |
+| --- | --- |
+| Lab 1 | Basic C programs|
+| Lab 2 | Floationg Point Representations |
+| Lab 3 | Graded Lab 1 |
+| Lab 4 | Assembly Code |
+| Lab 5 | GDB |
+| Lab 6 | Debugging errors |
+| Lab 7 | Buffer Lab |
+| Lab 8 | Graded Lab 2 |
+| Lab 9 | Valgrind and Cache |
