@@ -77,6 +77,29 @@ void built_in_programs(char **args){
 }
 
 
+// Help command
+void print_help(char **args){
+    if(args[1] == NULL){
+        printf("Available commands: \nhello \nadd \nsubtract \ncd \nhistory \nquit\nType help <command> to get more information about a specific command\n");
+    } else if(strcmp(args[1], "hello") == 0){
+        printf("hello: Prints a greeting message.\n");
+    } else if(strcmp(args[1], "add") == 0){
+        printf("add <num1> <num2>: Adds two integers.\n");
+    } else if(strcmp(args[1], "subtract") == 0){
+        printf("subtract <num1> <num2>: Subtracts the second integer from the first.\n");
+    } else if(strcmp(args[1], "cd") == 0){
+        printf("cd <path>: Changes the current directory to the specified path.\n");
+    } else if(strcmp(args[1], "history") == 0){
+        printf("history: Displays the last 10 commands entered.\n");
+    } else if(strcmp(args[1], "quit") == 0){
+        printf("quit: Exits the shell.\n");
+    }else if(strcmp(args[1], "exit") == 0){
+        printf("exit: Exits the shell.\n");
+    }else {
+        printf("No help available for '%s'.\n", args[1]);
+    }
+}
+
 
 // executing external commands
 
@@ -110,6 +133,8 @@ void execute_external(char **args, int is_background){
 void signal_handler(int sig){
     if(sig==SIGINT){
         printf("\nCaught SIGINT (Ctrl+C), shell continuing...\n");
+    }else if(sig == SIGCHLD){
+        while(waitpid(-1, NULL, WNOHANG) > 0);
     }
 }
 
@@ -144,12 +169,12 @@ void execute_command(char *input){
         print_history();
     }else if(strcmp(args[0], "hello")==0 || strcmp(args[0], "add")==0 || strcmp(args[0],"subtract")==0){
         built_in_programs(args);
-    }else if(strcmp(args[0], "quit")==0){
+    }else if(strcmp(args[0], "quit")==0 || strcmp(args[0], "exit")==0){
         printf("Thank you for using the shell...\nBye 😉\n");
         exit(0);
-    }
-    
-    else{
+    }else if(strcmp(args[0], "help") == 0){
+        print_help(args);
+    }else{
         execute_external(args, is_background);
     }
 }
@@ -159,7 +184,8 @@ void execute_command(char *input){
 int main(){
     char input[MAX_INPUT_SIZE];
     signal(SIGINT, signal_handler);
-    printf("Welcome to MY Shell!! \nThis is a coustom shell implemented in C!\nSay hello and wait for magic to happen 😄\n");
+    signal(SIGCHLD, signal_handler); // to handle zombie processes
+    printf("Welcome to MY Shell!! \nThis is a coustom shell implemented in C!\nSay hello and wait for magic to happen 😄\nType `help` to get list of commands!!\n");
     
     while(1){
         printf("my_shell> ");
